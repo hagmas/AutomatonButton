@@ -35,7 +35,7 @@ struct AppStoreButtonViewModel: AutomatonButtonViewModel {
         case downloadCompleted
     }
     
-    static func event(with currentState: State) -> Event? {
+    static func createEvent(with currentState: State) -> Event? {
         switch currentState {
         case .get:
             return .getTapped

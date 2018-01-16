@@ -21,7 +21,7 @@ open class AutomatonButton<T: AutomatonButtonViewModel>: UIControl {
     }
     
     // This is to override
-    open var animations: Binder<(T.State?, T.State)> {
+    open var stateBinder: Binder<(T.State?, T.State)> {
         return Binder<(T.State?, T.State)>(self, binding: { (target, stateSet) in
         })
     }
@@ -42,7 +42,7 @@ open class AutomatonButton<T: AutomatonButtonViewModel>: UIControl {
         
         sampling(hoge: tapEvent.asObservable(), source: _customState)
             .map { $1 }
-            .map (T.event)
+            .map (T.createEvent)
             .filterNil().bind(to: eventPublisher).disposed(by: disposeBag)
         
         tapEvent.map { event in InternalAction.fromUIControl(.touchUpInside) }.bind(to: actionHub).disposed(by: disposeBag)
@@ -50,7 +50,7 @@ open class AutomatonButton<T: AutomatonButtonViewModel>: UIControl {
         rx.controlEvent(.touchUpOutside).map { event in InternalAction.fromUIControl(.touchUpOutside) }.bind(to: actionHub).disposed(by: disposeBag)
         
         Observable.zip(_customState.asObservable().map { Optional($0) }.startWith(nil), _customState.asObservable())
-            .bind(to: animations).disposed(by: disposeBag)
+            .bind(to: stateBinder).disposed(by: disposeBag)
         
         sampling(hoge: actionHub.asObservable(), source: _customState)
             .map({ (internalAction, state) -> T.State? in

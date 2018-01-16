@@ -13,7 +13,7 @@ public protocol AutomatonButtonViewModel {
     associatedtype Event
     associatedtype Action
     
-    static func event(with currentState: State) -> Event?
+    static func createEvent(with currentState: State) -> Event?
     static func reducer(for action: Action, with currentState: State) -> State?
     static func reducer(for controlEvent: UIControlEvents, with currentState: State) -> State?
 }

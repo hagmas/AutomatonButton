@@ -78,7 +78,7 @@ class AppStoreButton: AutomatonButton<AppStoreButtonViewModel> {
         return imageView
     }()
 
-    override var animations: Binder<(AppStoreButtonViewModel.State?, AppStoreButtonViewModel.State)> {
+    override var stateBinder: Binder<(AppStoreButtonViewModel.State?, AppStoreButtonViewModel.State)> {
         return Binder<(AppStoreButtonViewModel.State?, AppStoreButtonViewModel.State)>(self, binding: { (target, stateSet) in
             let (current, next) = stateSet
             
